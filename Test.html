@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Selector</title>
+    <style>
+        .slider-container {
+            margin: 20px;
+            display: inline-block;
+            margin: 20px;
+            vertical-align: top;
+        }
+        .product {
+            margin: 10px 0;
+        }
+
+        @media (max-width: 768px) {
+            .slider-container {
+                display: block;
+                margin: 10px 0;
+            }
+        }
+        .product-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: flex-start;
+            align-items: center;
+        }
+        .product.card {
+            border: 1px solid #080000;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 200px;
+        }
+        .product.card img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+        .product.card .container {
+            padding: 10px;
+        }
+        .collapsible {
+            background-color: #777;
+            color: white;
+            cursor: pointer;
+            padding: 10px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 15px;
+        }
+
+        .active, .collapsible:hover {
+            background-color: #555;
+        }
+
+        .content {
+            padding: 0 18px;
+            display: none;
+            overflow: hidden;
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+    <nav style="display: flex; flex-wrap: wrap; justify-content:center ; align-items: center; padding: 5px; background-color: #f8f8f8;">
+        <div style="padding:5px"></div>
+            <div style="width: 150px; height: 40px; background-color: #ffadad; cursor: pointer; display: flex; justify-content: center; align-items: center;" onmouseover="this.style.backgroundColor='#e69999'" onmouseout="this.style.backgroundColor='#ffadad'" data-en="Soil Products" data-hi="मिट्टी उत्पाद" data-pa="ਮਿੱਟੀ ਉਤਪਾਦ">Soil Products</div>
+        </div>
+        <div style="padding:5px"></div>
+            <div style="width: 150px; height: 40px; background-color: #fdffb6; cursor: pointer; display: flex; justify-content: center; align-items: center;" onmouseover="this.style.backgroundColor='#e6e6a3'" onmouseout="this.style.backgroundColor='#fdffb6'" data-en="Crop Soil Needs" data-hi="फसल मिट्टी की जरूरतें" data-pa="ਫਸਲ ਮਿੱਟੀ ਦੀਆਂ ਲੋੜਾਂ">Crop Soil Needs</div>
+        </div>
+        <div style="padding:5px"></div>
+            <div style="width: 150px; height: 40px; background-color: #caffbf; cursor: pointer; display: flex; justify-content: center; align-items: center;" onmouseover="this.style.backgroundColor='#8ab0e6'" onmouseout="this.style.backgroundColor='#a0c4ff'" data-en="BioChar Quiz" data-hi="बायोचार क्विज़" data-pa="ਬਾਇਓਚਾਰ ਕਵਿਜ਼">BioChar Quiz</div>
+        </div>
+        <div style="padding:5px"></div>
+            <div style="width: 150px; height: 40px; background-color: #9bf6ff; cursor: pointer; display: flex; justify-content: center; align-items: center;" onmouseover="this.style.backgroundColor='#a699e6'" onmouseout="this.style.backgroundColor='#bdb2ff'" data-en="Soil Testing Labs" data-hi="मिट्टी परीक्षण प्रयोगशालाएं" data-pa="ਮਿੱਟੀ ਦੀ ਜਾਂਚ ਦੀਆਂ ਲੈਬਾਂ">Soil Testing Labs</div>
+        </div>
+    </nav>
+    <div>
+        <label for="languageSelect">Select Language:</label>
+        <select id="languageSelect">
+            <option value="en">English</option>
+            <option value="hi">हिन्दी</option>
+            <option value="pa">ਪੰਜਾਬੀ</option>
+        </select>
+    </div>
+    <div>
+        <div class="slider-container">
+            <label for="slider1" data-en="N(kgs/h): " data-hi="एन(किग्रा/घंटा): " data-pa="ਐਨ(ਕਿਲੋ/ਘੰਟਾ): ">N(kgs/h): </label>
+            <input type="range" id="slider1" min="0" max="100" value="50">
+            <span id="value1">50</span>
+        </div>
+        <div class="slider-container">
+            <label for="slider2" data-en="P(kgs/h): " data-hi="पी(किग्रा/घंटा): " data-pa="ਪੀ(ਕਿਲੋ/ਘੰਟਾ): ">P(kgs/h): </label>
+            <input type="range" id="slider2" min="0" max="100" value="50">
+            <span id="value2">50</span>
+        </div>
+        <div class="slider-container">
+            <label for="slider3" data-en="K(kgs/h): " data-hi="के(किग्रा/घंटा): " data-pa="ਕੇ(ਕਿਲੋ/ਘੰਟਾ): ">K(kgs/h): </label>
+            <input type="range" id="slider3" min="0" max="100" value="50">
+            <span id="value3">50</span>
+        </div>
+    </div>
+    <div>
+        <div style="display: flex; align-items: center; gap: 10px; padding: 10px;"></div>
+            <label for="farmSize" data-en="Farm Size: " data-hi="खेत का आकार: " data-pa="ਖੇਤ ਦਾ ਆਕਾਰ: ">Farm Size: </label>
+            <input type="text" id="farmSize" name="farmSize" style="width: 100px;">
+            <select id="farmUnit" name="farmUnit">
+                <option value="acres">Acres</option>
+                <option value="hectares">Hectares</option>
+                <option value="bigha">Bigha</option>
+                <option value="marla">Marla</option>
+                <option value="kanal">Kanal</option>
+                <option value="karam">Karam</option>
+                <option value="sarsai">Sarsai</option>
+                <option value="biswa">Biswa</option>
+            </select>
+        </div>
+    </div>
+
+    <div id="products" class="product-grid">
+       
+    </div>
+
+    <div class="collapsible-panel">
+        <button type="button" class="collapsible" data-en="Product Details" data-hi="उत्पाद विवरण" data-pa="ਉਤਪਾਦ ਵੇਰਵਾ">Product Details</button>
+        <div class="content" style="display: none;"></div>
+            <p data-en="Here you can find detailed information about the products." data-hi="यहां आपको उत्पादों के बारे में विस्तृत जानकारी मिल सकती है।" data-pa="ਇੱਥੇ ਤੁਸੀਂ ਉਤਪਾਦਾਂ ਬਾਰੇ ਵਿਸਥਾਰਪੂਰਵਕ ਜਾਣਕਾਰੀ ਪ੍ਰਾਪਤ ਕਰ ਸਕਦੇ ਹੋ।">Here you can find detailed information about the products.</p>
+        </div>
+    </div>
+
+    <script>
+        const sliders = document.querySelectorAll('input[type="range"]');
+        const productsDiv = document.getElementById('products');
+        const languageSelect = document.getElementById('languageSelect');
+
+        sliders.forEach(slider => {
+            slider.addEventListener('input', updateProducts);
+        });
+
+        window.addEventListener('load', function() {
+            slider1.dispatchEvent(new Event('input'));
+        });
+
+        function updateProducts() {
+            while (productsDiv.firstChild) {
+                productsDiv.removeChild(productsDiv.firstChild);
+            }
+
+            const slider1Value = document.getElementById('slider1').value;
+            const slider2Value = document.getElementById('slider2').value;
+            const slider3Value = document.getElementById('slider3').value;
+
+            document.getElementById('value1').textContent = slider1Value;
+            document.getElementById('value2').textContent = slider2Value;
+            document.getElementById('value3').textContent = slider3Value;
+
+            if (slider1Value >= 70) {
+                if (slider1Value >= 70 && slider1Value < 80) {
+                    productsDiv.appendChild(createProductCard(
+                        'product1', 
+                        35, 
+                        35 * 250, 
+                        slider1Value, 
+                        slider2Value, 
+                        slider3Value
+                    ));
+                } else if (slider1Value >= 80 && slider1Value < 90) {
+                    productsDiv.appendChild(createProductCard(
+                        'product1', 
+                        20, 
+                        20 * 250, 
+                        slider1Value, 
+                        slider2Value, 
+                        slider3Value
+                    ));
+                } else if (slider1Value >= 90) {
+                    productsDiv.appendChild(createProductCard(
+                        'product1', 
+                        12, 
+                        12 * 250, 
+                        slider1Value, 
+                        slider2Value, 
+                        slider3Value
+                    ));
+                }
+            }
+            if (slider2Value >= 70) {
+                productsDiv.appendChild(createProductCard(
+                    'product2', 
+                    12, 
+                    250, 
+                    slider1Value, 
+                    slider2Value, 
+                    slider3Value
+                ));
+            }
+
+            if (slider3Value >= 70) {
+                productsDiv.appendChild(createProductCard(
+                    'product3', 
+                    12, 
+                    250, 
+                    slider1Value, 
+                    slider2Value, 
+                    slider3Value
+                ));
+            }
+        }
+
+        updateProducts();
+
+        function getTitle(product) {
+            if (product == 'product1') {
+                if(languageSelect.value == 'en') {
+                    return 'Product 1';
+                } else if (languageSelect.value == 'hi') {
+                    return 'उत्पाद 1';
+                } else if (languageSelect.value == 'pa') {
+                    return 'ਉਤਪਾਦ 1';
+                }
+                return 'Product 1';
+            } else if (product == 'product2') {
+                if(languageSelect.value == 'en') {
+                    return 'Product 2';
+                } else if (languageSelect.value == 'hi') {
+                    return 'उत्पाद 2';
+                } else if (languageSelect.value == 'pa') {
+                    return 'ਉਤਪਾਦ 2';
+                }
+                return 'Product 2';
+            } else if (product == 'product3') {
+                if(languageSelect.value == 'en') {
+                    return 'Product 3';
+                } else if (languageSelect.value == 'hi') {
+                    return 'उत्पाद 3';
+                } else if (languageSelect.value == 'pa') {
+                    return 'ਉਤਪਾਦ 3';
+                }
+                return 'Product 3';
+            }
+        }
+
+        function getDescription(product){
+            if (product == 'product1') {
+                if(languageSelect.value == 'en') {
+                    return 'Description of Product 1';
+                } else if (languageSelect.value == 'hi') {
+                    return 'उत्पाद 1 का विवरण';
+                } else if (languageSelect.value == 'pa') {
+                    return 'ਉਤਪਾਦ 1 ਦਾ ਵੇਰਵਾ';
+                }
+                return 'Description of Product 1';
+            } else if (product == 'product2') {
+                if(languageSelect.value == 'en') {
+                    return 'Description of Product 2';
+                } else if (languageSelect.value == 'hi') {
+                    return 'उत्पाद 2 का विवरण';
+                } else if (languageSelect.value == 'pa') {
+                    return 'ਉਤਪਾਦ 2 ਦਾ ਵੇਰਵਾ';
+                }
+                return 'Description of Product 2';
+            } else if (product == 'product3') {
+                if(languageSelect.value == 'en') {
+                    return 'Description of Product 3';
+                } else if (languageSelect.value == 'hi') {
+                    return 'उत्पाद 3 का विवरण';
+                } else if (languageSelect.value == 'pa') {
+                    return 'ਉਤਪਾਦ 3 ਦਾ ਵੇਰਵਾ';
+                }
+                return 'Description of Product 3';
+            }
+        }
+
+        function getImageSrc(product) {
+            if (product == 'product1') {
+                return 'https://via.placeholder.com/150';
+            } else if (product == 'product2') {
+                return 'https://via.placeholder.com/150';
+            } else if (product == 'product3') {
+                return 'https://via.placeholder.com/150';
+            }
+        }
+
+      
+
+
+        function createProductCard(product,quantity, price, slider1, slider2, slider3) {
+            const productCard = document.createElement('div');
+            productCard.className = 'product card';
+            productCard.setAttribute('data-slider1', slider1);
+            productCard.setAttribute('data-slider2', slider2);
+            productCard.setAttribute('data-slider3', slider3);
+
+            productCard.innerHTML = `
+                <img src="${getImageSrc(product)}" alt="${getTitle(product)} Image" style="width:100%">
+                <div class="container">
+                    <h4><b>${getTitle(product)}</b></h4>
+                    <p>${getDescription(product)}</p>
+                    <p>Quantity: ${quantity}</p>
+                    <p>Price: $${price}</p>
+                </div>
+            `;
+
+            return productCard;
+        }
+
+        document.querySelectorAll('.collapsible').forEach(button => {
+            button.addEventListener('click', function() {
+                this.classList.toggle('active');
+                const content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                    content.style.display = "none";
+                } else {
+                    content.style.display = "block";
+                }
+            });
+        });
+
+        languageSelect.addEventListener('input', updateProducts);
+
+        languageSelect.addEventListener('change', function() {
+            const selectedLanguage = this.value;
+            document.querySelectorAll('[data-en]').forEach(element => {
+                element.textContent = element.getAttribute(`data-${selectedLanguage}`);
+            });
+        });
+    </script>
+</body>
+</html>

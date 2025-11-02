@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Selector</title>
+    <style>
+        .slider-container {
+            margin: 20px;
+            display: inline-block;
+            margin: 20px;
+            vertical-align: top;
+        }
+        .product {
+            margin: 10px 0;
+        }
+
+
+        @media (max-width: 768px) {
+            .slider-container {
+                display: block;
+                margin: 10px 0;
+            }
+        }
+        .product-grid {
+            /* border: 1px solid #080000; */
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: flex-start;
+            align-items: :center;
+        }
+        .product.card {
+            border: 1px solid #080000;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 200px; /* Fixed width */
+            /* flex: 1 1 auto; Allow items to grow and shrink */
+        }
+        .product.card img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+        .product.card .container {
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slider-container">
+        <label for="slider1">Slider 1: </label>
+        <input type="range" id="slider1" min="0" max="100" value="50">
+        <span id="value1">50</span>
+    </div>
+    <div class="slider-container">
+        <label for="slider2">Slider 2: </label>
+        <input type="range" id="slider2" min="0" max="100" value="50">
+        <span id="value2">50</span>
+    </div>
+    <div class="slider-container">
+        <label for="slider3">Slider 3: </label>
+        <input type="range" id="slider3" min="0" max="100" value="50">
+        <span id="value3">50</span>
+    </div>
+
+    <div id="products" class="product-grid">
+       
+    </div>
+
+   
+
+
+    <script>
+        const sliders = document.querySelectorAll('input[type="range"]');
+        const products = document.querySelectorAll('.product');
+        const productsDiv = document.getElementById('products');
+
+        sliders.forEach(slider => {
+            slider.addEventListener('input', updateProducts);
+        });
+
+        function updateProducts() {
+
+            while (productsDiv.firstChild) {
+                productsDiv.removeChild(productsDiv.firstChild);
+            }
+
+            const slider1Value = document.getElementById('slider1').value;
+            const slider2Value = document.getElementById('slider2').value;
+            const slider3Value = document.getElementById('slider3').value;
+
+            document.getElementById('value1').textContent = slider1Value;
+            document.getElementById('value2').textContent = slider2Value;
+            document.getElementById('value3').textContent = slider3Value;
+
+            if (slider1Value >= 70)
+            {
+                productsDiv.appendChild(createProductCard(
+                    'product4.jpg', 
+                    'Product 4', 
+                    'Description of Product 4', 
+                    12, 
+                    250, 
+                    50, 
+                    60, 
+                    70
+                ));
+            }
+            if (slider2Value >= 70)
+            {
+                productsDiv.appendChild(createProductCard(
+                    'product5.jpg', 
+                    'Product 5', 
+                    'Description of Product 5', 
+                    12, 
+                    250, 
+                    50, 
+                    60, 
+                    70
+                ));
+            }
+
+            if (slider3Value >= 70)
+            {
+                productsDiv.appendChild(createProductCard(
+                    'product6.jpg', 
+                    'Product 6', 
+                    'Description of Product 6', 
+                    12, 
+                    250, 
+                    50, 
+                    60, 
+                    70
+                ));
+            }
+        }
+
+        updateProducts();
+
+        function createProductCard(imageSrc, title, description, quantity, price, slider1, slider2, slider3) {
+        const productCard = document.createElement('div');
+        productCard.className = 'product card';
+        productCard.setAttribute('data-slider1', slider1);
+        productCard.setAttribute('data-slider2', slider2);
+        productCard.setAttribute('data-slider3', slider3);
+
+        productCard.innerHTML = `
+            <img src="${imageSrc}" alt="${title} Image" style="width:100%">
+            <div class="container">
+                <h4><b>${title}</b></h4>
+                <p>${description}</p>
+                <p>Quantity: ${quantity}</p>
+                <p>Price: $${price}</p>
+            </div>
+        `;
+
+        return productCard;
+    }
+
+    
+
+    // const newProduct = createProductCard(
+    //     'product4.jpg', 
+    //     'Product 4', 
+    //     'Description of Product 4', 
+    //     12, 
+    //     250, 
+    //     50, 
+    //     60, 
+    //     70
+    // );
+
+    // productsDiv.appendChild(newProduct);
+
+        
+    </script>
+</body>
+</html>
+<script>
+    
+</script>

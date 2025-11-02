@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saroja.earth - Soil Health & Fertilizer Recommendations</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            color: #718096;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        /* Navigation */
+        .nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .nav-item {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-size: 14px;
+        }
+
+        .nav-item:nth-child(2) {
+            background: linear-gradient(45deg, #4ecdc4, #6dd5ed);
+        }
+
+        .nav-item:nth-child(3) {
+            background: linear-gradient(45deg, #45b7d1, #96c93d);
+        }
+
+        .nav-item:nth-child(4) {
+            background: linear-gradient(45deg, #f093fb, #f5576c);
+        }
+
+        .nav-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Language Selector */
+        .language-selector {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .language-selector label {
+            font-weight: 600;
+            margin-right: 15px;
+            color: #2d3748;
+        }
+
+        .language-selector select {
+            padding: 10px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 16px;
+            background: white;
+            cursor: pointer;
+            transition: border-color 0.3s ease;
+        }
+
+        .language-selector select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        /* Main Content */
+        .main-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        /* NPK Input Section */
+        .npk-section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .npk-inputs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .npk-input {
+            background: #f7fafc;
+            border-radius: 15px;
+            padding: 25px;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .npk-input:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .npk-input.active {
+            border-color: #667eea;
+            background: #edf2f7;
+        }
+
+        .npk-label {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 15px;
+            display: block;
+            font-size: 1.1rem;
+        }
+
+        .slider-container {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .slider {
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            background: #e2e8f0;
+            outline: none;
+            -webkit-appearance: none;
+            cursor: pointer;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .slider::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .value-display {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #667eea;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        /* Farm Size Input */
+        .farm-size-section {
+            background: #f7fafc;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 2px solid #e2e8f0;
+        }
+
+        .farm-size-inputs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .farm-size-inputs label {
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .farm-size-inputs input {
+            padding: 12px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 16px;
+            width: 120px;
+            text-align: center;
+        }
+
+        .farm-size-inputs select {
+            padding: 12px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 16px;
+            background: white;
+            cursor: pointer;
+        }
+
+        /* Products Section */
+        .products-section {
+            margin-bottom: 40px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 15px;
+        }
+
+        .product-description {
+            color: #718096;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .product-specs {
+            background: #f7fafc;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .spec-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .spec-label {
+            color: #718096;
+        }
+
+        .spec-value {
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .dosage-info {
+            background: #e6fffa;
+            border: 1px solid #81e6d9;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .dosage-title {
+            font-weight: 600;
+            color: #234e52;
+            margin-bottom: 8px;
+        }
+
+        .dosage-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #234e52;
+        }
+
+        /* Collapsible Section */
+        .collapsible-section {
+            margin-top: 40px;
+        }
+
+        .collapsible {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            cursor: pointer;
+            padding: 20px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .collapsible:hover {
+            background: linear-gradient(45deg, #5a67d8, #6b46c1);
+        }
+
+        .collapsible.active {
+            border-radius: 15px 15px 0 0;
+        }
+
+        .collapsible-content {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background: white;
+            border-radius: 0 0 15px 15px;
+            border: 2px solid #e2e8f0;
+            border-top: none;
+        }
+
+        .collapsible-content.active {
+            max-height: 1000px;
+            padding: 20px;
+        }
+
+        .collapsible-content p {
+            color: #718096;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header {
+                padding: 20px;
+            }
+
+            .logo {
+                font-size: 2rem;
+            }
+
+            .main-content {
+                padding: 20px;
+            }
+
+            .npk-inputs {
+                grid-template-columns: 1fr;
+            }
+
+            .farm-size-inputs {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .farm-size-inputs input,
+            .farm-size-inputs select {
+                width: 100%;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-item {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        /* Animation for product cards appearing */
+        .product-card {
+            animation: slideInUp 0.6s ease-out;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Loading state */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #718096;
+        }
+
+        .spinner {
+            border: 4px solid #e2e8f0;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">Saroja.earth</div>
+            <div class="tagline" data-en="Your One-Stop Solution for Soil Health & Fertilizer Recommendations" 
+                 data-hi="मिट्टी की सेहत और उर्वरक सुझावों के लिए आपका एक-स्टॉप समाधान" 
+                 data-pa="ਮਿੱਟੀ ਦੀ ਸਿਹਤ ਅਤੇ ਖਾਦ ਸੁਝਾਅਾਂ ਲਈ ਤੁਹਾਡਾ ਇੱਕ-ਸਟੌਪ ਹੱਲ">Your One-Stop Solution for Soil Health & Fertilizer Recommendations</div>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="nav">
+            <button class="nav-item" data-en="Soil Products" data-hi="मिट्टी उत्पाद" data-pa="ਮਿੱਟੀ ਉਤਪਾਦ">
+                <i class="fas fa-seedling"></i> Soil Products
+            </button>
+            <button class="nav-item" data-en="Crop Soil Needs" data-hi="फसल मिट्टी की जरूरतें" data-pa="ਫਸਲ ਮਿੱਟੀ ਦੀਆਂ ਲੋੜਾਂ">
+                <i class="fas fa-leaf"></i> Crop Soil Needs
+            </button>
+            <button class="nav-item" data-en="BioChar Quiz" data-hi="बायोचार क्विज़" data-pa="ਬਾਇਓਚਾਰ ਕਵਿਜ਼">
+                <i class="fas fa-question-circle"></i> BioChar Quiz
+            </button>
+            <button class="nav-item" data-en="Soil Testing Labs" data-hi="मिट्टी परीक्षण प्रयोगशालाएं" data-pa="ਮਿੱਟੀ ਦੀ ਜਾਂਚ ਦੀਆਂ ਲੈਬਾਂ">
+                <i class="fas fa-flask"></i> Soil Testing Labs
+            </button>
+        </nav>
+
+        <!-- Language Selector -->
+        <div class="language-selector">
+            <label for="languageSelect" data-en="Select Language:" data-hi="भाषा चुनें:" data-pa="ਭਾਸ਼ਾ ਚੁਣੋ:">Select Language:</label>
+            <select id="languageSelect">
+                <option value="en">English</option>
+                <option value="hi">हिन्दी</option>
+                <option value="pa">ਪੰਜਾਬੀ</option>
+            </select>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- NPK Input Section -->
+            <div class="npk-section">
+                <h2 class="section-title" data-en="Soil NPK Analysis" data-hi="मिट्टी एनपीके विश्लेषण" data-pa="ਮਿੱਟੀ NPK ਵਿਸ਼ਲੇਸ਼ਣ">Soil NPK Analysis</h2>
+                
+                <div class="npk-inputs">
+                    <div class="npk-input" id="nitrogen-input">
+                        <label class="npk-label" for="nitrogen-slider" data-en="Nitrogen (N) - kg/hectare" data-hi="नाइट्रोजन (एन) - किग्रा/हेक्टेयर" data-pa="ਨਾਈਟ੍ਰੋਜਨ (N) - ਕਿਲੋ/ਹੈਕਟੇਅਰ">Nitrogen (N) - kg/hectare</label>
+                        <div class="slider-container">
+                            <input type="range" id="nitrogen-slider" class="slider" min="0" max="200" value="50">
+                        </div>
+                        <div class="value-display" id="nitrogen-value">50</div>
+                    </div>
+
+                    <div class="npk-input" id="phosphorus-input">
+                        <label class="npk-label" for="phosphorus-slider" data-en="Phosphorus (P) - kg/hectare" data-hi="फॉस्फोरस (पी) - किग्रा/हेक्टेयर" data-pa="ਫਾਸਫੋਰਸ (P) - ਕਿਲੋ/ਹੈਕਟੇਅਰ">Phosphorus (P) - kg/hectare</label>
+                        <div class="slider-container">
+                            <input type="range" id="phosphorus-slider" class="slider" min="0" max="200" value="50">
+                        </div>
+                        <div class="value-display" id="phosphorus-value">50</div>
+                    </div>
+
+                    <div class="npk-input" id="potassium-input">
+                        <label class="npk-label" for="potassium-slider" data-en="Potassium (K) - kg/hectare" data-hi="पोटैशियम (के) - किग्रा/हेक्टेयर" data-pa="ਪੋਟਾਸ਼ੀਅਮ (K) - ਕਿਲੋ/ਹੈਕਟੇਅਰ">Potassium (K) - kg/hectare</label>
+                        <div class="slider-container">
+                            <input type="range" id="potassium-slider" class="slider" min="0" max="200" value="50">
+                        </div>
+                        <div class="value-display" id="potassium-value">50</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Farm Size Input -->
+            <div class="farm-size-section">
+                <h3 class="section-title" data-en="Farm Size" data-hi="खेत का आकार" data-pa="ਖੇਤ ਦਾ ਆਕਾਰ">Farm Size</h3>
+                <div class="farm-size-inputs">
+                    <label for="farmSize" data-en="Size:" data-hi="आकार:" data-pa="ਆਕਾਰ:">Size:</label>
+                    <input type="number" id="farmSize" name="farmSize" placeholder="Enter size" min="0" step="0.1">
+                    <select id="farmUnit" name="farmUnit">
+                        <option value="hectares" data-en="Hectares" data-hi="हेक्टेयर" data-pa="ਹੈਕਟੇਅਰ">Hectares</option>
+                        <option value="acres" data-en="Acres" data-hi="एकड़" data-pa="ਏਕੜ">Acres</option>
+                        <option value="bigha" data-en="Bigha" data-hi="बीघा" data-pa="ਬੀਘਾ">Bigha</option>
+                        <option value="marla" data-en="Marla" data-hi="मरला" data-pa="ਮਰਲਾ">Marla</option>
+                        <option value="kanal" data-en="Kanal" data-hi="कनाल" data-pa="ਕਨਾਲ">Kanal</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Products Section -->
+            <div class="products-section">
+                <h2 class="section-title" data-en="Recommended Fertilizers" data-hi="अनुशंसित उर्वरक" data-pa="ਸਿਫਾਰਸ਼ੀ ਖਾਦ">Recommended Fertilizers</h2>
+                <div id="products" class="products-grid">
+                    <!-- Products will be dynamically generated here -->
+                </div>
+            </div>
+
+            <!-- Collapsible Details Section -->
+            <div class="collapsible-section">
+                <button type="button" class="collapsible" data-en="Product Details & Information" data-hi="उत्पाद विवरण और जानकारी" data-pa="ਉਤਪਾਦ ਵੇਰਵਾ ਅਤੇ ਜਾਣਕਾਰੀ">
+                    <i class="fas fa-info-circle"></i> Product Details & Information
+                </button>
+                <div class="collapsible-content">
+                    <p data-en="Here you can find detailed information about our soil additives and fertilizers. Each product is carefully formulated to provide optimal nutrition for your crops based on soil analysis." 
+                       data-hi="यहां आपको हमारे मिट्टी के योजक और उर्वरकों के बारे में विस्तृत जानकारी मिल सकती है। प्रत्येक उत्पाद को मिट्टी के विश्लेषण के आधार पर आपकी फसलों के लिए इष्टतम पोषण प्रदान करने के लिए सावधानीपूर्वक तैयार किया गया है।" 
+                       data-pa="ਇੱਥੇ ਤੁਸੀਂ ਸਾਡੇ ਮਿੱਟੀ ਦੇ ਐਡਿਟਿਵ ਅਤੇ ਖਾਦਾਂ ਬਾਰੇ ਵਿਸਥਾਰਪੂਰਵਕ ਜਾਣਕਾਰੀ ਪ੍ਰਾਪਤ ਕਰ ਸਕਦੇ ਹੋ। ਹਰੇਕ ਉਤਪਾਦ ਨੂੰ ਮਿੱਟੀ ਦੇ ਵਿਸ਼ਲੇਸ਼ਣ ਦੇ ਆਧਾਰ 'ਤੇ ਤੁਹਾਡੀਆਂ ਫਸਲਾਂ ਲਈ ਆਦਰਸ਼ ਪੋਸ਼ਣ ਪ੍ਰਦਾਨ ਕਰਨ ਲਈ ਸਾਵਧਾਨੀ ਨਾਲ ਤਿਆਰ ਕੀਤਾ ਗਿਆ ਹੈ।">
+                        Here you can find detailed information about our soil additives and fertilizers. Each product is carefully formulated to provide optimal nutrition for your crops based on soil analysis.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Fertilizer data based on NPK.html
+        const fertilizers = {
+            topGrade: {
+                name: { en: "Top Grade Soil Additive", hi: "टॉप ग्रेड मिट्टी योजक", pa: "ਟੌਪ ਗ੍ਰੇਡ ਮਿੱਟੀ ਐਡਿਟਿਵ" },
+                composition: { en: "Biochar: 25%, Compost: 40%, Mycorrhiza: 10%, N: 5%, P: 5%, K: 5%, Micro-nutrients: 5%, PSB: 5%", hi: "बायोचार: 25%, कम्पोस्ट: 40%, माइकोराइजा: 10%, एन: 5%, पी: 5%, के: 5%, सूक्ष्म पोषक: 5%, PSB: 5%", pa: "ਬਾਇਓਚਾਰ: 25%, ਕੰਪੋਸਟ: 40%, ਮਾਈਕੋਰਾਈਜ਼ਾ: 10%, N: 5%, P: 5%, K: 5%, ਮਾਈਕ੍ਰੋ-ਨਿਊਟ੍ਰੀਐਂਟਸ: 5%, PSB: 5%" },
+                costPerKg: 222,
+                description: { en: "Premium soil additive with balanced NPK and beneficial microorganisms", hi: "संतुलित NPK और लाभकारी सूक्ष्मजीवों के साथ प्रीमियम मिट्टी योजक", pa: "ਸੰਤੁਲਿਤ NPK ਅਤੇ ਲਾਭਕਾਰੀ ਸੂਖਮ ਜੀਵਾਂ ਦੇ ਨਾਲ ਪ੍ਰੀਮੀਅਮ ਮਿੱਟੀ ਐਡਿਟਿਵ" }
+            },
+            lowGrade: {
+                name: { en: "Low Grade Soil Additive", hi: "लो ग्रेड मिट्टी योजक", pa: "ਲੋ ਗ੍ਰੇਡ ਮਿੱਟੀ ਐਡਿਟਿਵ" },
+                composition: { en: "Biochar: 40%, Compost: 50%, Mycorrhiza: 10%", hi: "बायोचार: 40%, कम्पोस्ट: 50%, माइकोराइजा: 10%", pa: "ਬਾਇਓਚਾਰ: 40%, ਕੰਪੋਸਟ: 50%, ਮਾਈਕੋਰਾਈਜ਼ਾ: 10%" },
+                costPerKg: 72,
+                description: { en: "Basic soil conditioner for improving soil structure", hi: "मिट्टी की संरचना में सुधार के लिए बुनियादी मिट्टी कंडीशनर", pa: "ਮਿੱਟੀ ਦੀ ਬਣਤਰ ਵਿੱਚ ਸੁਧਾਰ ਲਈ ਬੁਨਿਆਦੀ ਮਿੱਟੀ ਕੰਡੀਸ਼ਨਰ" }
+            },
+            pGrade: {
+                name: { en: "P-Grade Fertilizer", hi: "पी-ग्रेड उर्वरक", pa: "P-ਗ੍ਰੇਡ ਖਾਦ" },
+                composition: { en: "Biochar: 20%, Compost: 40%, Mycorrhiza: 10%, N: 5%, P: 5%, K: 5%, Micro-nutrients: 5%, PSB: 10%", hi: "बायोचार: 20%, कम्पोस्ट: 40%, माइकोराइजा: 10%, एन: 5%, पी: 5%, के: 5%, सूक्ष्म पोषक: 5%, PSB: 10%", pa: "ਬਾਇਓਚਾਰ: 20%, ਕੰਪੋਸਟ: 40%, ਮਾਈਕੋਰਾਈਜ਼ਾ: 10%, N: 5%, P: 5%, K: 5%, ਮਾਈਕ੍ਰੋ-ਨਿਊਟ੍ਰੀਐਂਟਸ: 5%, PSB: 10%" },
+                costPerKg: 222,
+                description: { en: "Phosphorus-focused fertilizer with enhanced PSB content", hi: "बढ़ी हुई PSB सामग्री के साथ फॉस्फोरस-केंद्रित उर्वरक", pa: "ਵਧੇ ਹੋਏ PSB ਸਮੱਗਰੀ ਦੇ ਨਾਲ ਫਾਸਫੋਰਸ-ਕੇਂਦਰਿਤ ਖਾਦ" }
+            },
+            kGrade: {
+                name: { en: "K-Grade Fertilizer", hi: "के-ग्रेड उर्वरक", pa: "K-ਗ੍ਰੇਡ ਖਾਦ" },
+                composition: { en: "Biochar: 20%, Compost: 40%, Mycorrhiza: 10%, N: 5%, P: 5%, K: 5%, Micro-nutrients: 5%, NFB: 10%", hi: "बायोचार: 20%, कम्पोस्ट: 40%, माइकोराइजा: 10%, एन: 5%, पी: 5%, के: 5%, सूक्ष्म पोषक: 5%, NFB: 10%", pa: "ਬਾਇਓਚਾਰ: 20%, ਕੰਪੋਸਟ: 40%, ਮਾਈਕੋਰਾਈਜ਼ਾ: 10%, N: 5%, P: 5%, K: 5%, ਮਾਈਕ੍ਰੋ-ਨਿਊਟ੍ਰੀਐਂਟਸ: 5%, NFB: 10%" },
+                costPerKg: 267,
+                description: { en: "Potassium-focused fertilizer with nitrogen-fixing bacteria", hi: "नाइट्रोजन-फिक्सिंग बैक्टीरिया के साथ पोटैशियम-केंद्रित उर्वरक", pa: "ਨਾਈਟ੍ਰੋਜਨ-ਫਿਕਸਿੰਗ ਬੈਕਟੀਰੀਆ ਦੇ ਨਾਲ ਪੋਟਾਸ਼ੀਅਮ-ਕੇਂਦਰਿਤ ਖਾਦ" }
+            },
+            nGrade: {
+                name: { en: "N-Grade Fertilizer", hi: "एन-ग्रेड उर्वरक", pa: "N-ਗ੍ਰੇਡ ਖਾਦ" },
+                composition: { en: "Biochar: 20%, Compost: 40%, Mycorrhiza: 10%, N: 5%, P: 5%, K: 5%, Micro-nutrients: 5%, KSB: 10%", hi: "बायोचार: 20%, कम्पोस्ट: 40%, माइकोराइजा: 10%, एन: 5%, पी: 5%, के: 5%, सूक्ष्म पोषक: 5%, KSB: 10%", pa: "ਬਾਇਓਚਾਰ: 20%, ਕੰਪੋਸਟ: 40%, ਮਾਈਕੋਰਾਈਜ਼ਾ: 10%, N: 5%, P: 5%, K: 5%, ਮਾਈਕ੍ਰੋ-ਨਿਊਟ੍ਰੀਐਂਟਸ: 5%, KSB: 10%" },
+                costPerKg: 222,
+                description: { en: "Nitrogen-focused fertilizer with potassium-solubilizing bacteria", hi: "पोटैशियम-सॉल्यूबलाइजिंग बैक्टीरिया के साथ नाइट्रोजन-केंद्रित उर्वरक", pa: "ਪੋਟਾਸ਼ੀਅਮ-ਸੋਲਿਊਬਲਾਈਜ਼ਿੰਗ ਬੈਕਟੀਰੀਆ ਦੇ ਨਾਲ ਨਾਈਟ੍ਰੋਜਨ-ਕੇਂਦਰਿਤ ਖਾਦ" }
+            }
+        };
+
+        // Language data
+        const languages = {
+            en: "English",
+            hi: "हिन्दी", 
+            pa: "ਪੰਜਾਬੀ"
+        };
+
+        // DOM elements
+        const languageSelect = document.getElementById('languageSelect');
+        const nitrogenSlider = document.getElementById('nitrogen-slider');
+        const phosphorusSlider = document.getElementById('phosphorus-slider');
+        const potassiumSlider = document.getElementById('potassium-slider');
+        const farmSizeInput = document.getElementById('farmSize');
+        const farmUnitSelect = document.getElementById('farmUnit');
+        const productsDiv = document.getElementById('products');
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateProducts();
+            setupEventListeners();
+            updateLanguage();
+        });
+
+        function setupEventListeners() {
+            // NPK sliders
+            [nitrogenSlider, phosphorusSlider, potassiumSlider].forEach(slider => {
+                slider.addEventListener('input', function() {
+                    updateSliderValue(this);
+                    updateProducts();
+                });
+            });
+
+            // Farm size inputs
+            farmSizeInput.addEventListener('input', updateProducts);
+            farmUnitSelect.addEventListener('change', updateProducts);
+
+            // Language selector
+            languageSelect.addEventListener('change', updateLanguage);
+
+            // Collapsible sections
+            document.querySelectorAll('.collapsible').forEach(button => {
+                button.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    const content = this.nextElementSibling;
+                    content.classList.toggle('active');
+                });
+            });
+        }
+
+        function updateSliderValue(slider) {
+            const value = slider.value;
+            const valueDisplay = document.getElementById(slider.id.replace('-slider', '-value'));
+            valueDisplay.textContent = value;
+            
+            // Update active state
+            const inputContainer = slider.closest('.npk-input');
+            if (value > 0) {
+                inputContainer.classList.add('active');
+            } else {
+                inputContainer.classList.remove('active');
+            }
+        }
+
+        function updateLanguage() {
+            const selectedLanguage = languageSelect.value;
+            
+            // Update all elements with data attributes
+            document.querySelectorAll('[data-en]').forEach(element => {
+                const text = element.getAttribute(`data-${selectedLanguage}`);
+                if (text) {
+                    element.textContent = text;
+                }
+            });
+
+            // Update option texts
+            document.querySelectorAll('option[data-en]').forEach(option => {
+                const text = option.getAttribute(`data-${selectedLanguage}`);
+                if (text) {
+                    option.textContent = text;
+                }
+            });
+
+            // Update products
+            updateProducts();
+        }
+
+        function updateProducts() {
+            const nitrogen = parseInt(nitrogenSlider.value);
+            const phosphorus = parseInt(phosphorusSlider.value);
+            const potassium = parseInt(potassiumSlider.value);
+            const farmSize = parseFloat(farmSizeInput.value) || 1;
+            const farmUnit = farmUnitSelect.value;
+            const selectedLanguage = languageSelect.value;
+
+            // Clear existing products
+            productsDiv.innerHTML = '';
+
+            // Convert farm size to hectares for calculation
+            const farmSizeInHectares = convertToHectares(farmSize, farmUnit);
+
+            // Determine recommended fertilizers based on NPK values
+            const recommendations = getRecommendations(nitrogen, phosphorus, potassium);
+
+            // Create product cards
+            recommendations.forEach((fertilizer, index) => {
+                const productCard = createProductCard(fertilizer, farmSizeInHectares, selectedLanguage, index);
+                productsDiv.appendChild(productCard);
+            });
+
+            // Show message if no recommendations
+            if (recommendations.length === 0) {
+                const noRecommendationMsg = document.createElement('div');
+                noRecommendationMsg.className = 'loading';
+                noRecommendationMsg.innerHTML = `
+                    <div class="spinner"></div>
+                    <p data-en="Adjust NPK values to see fertilizer recommendations" 
+                       data-hi="उर्वरक सुझाव देखने के लिए NPK मानों को समायोजित करें" 
+                       data-pa="ਖਾਦ ਸੁਝਾਅ ਦੇਖਣ ਲਈ NPK ਮੁੱਲਾਂ ਨੂੰ ਅਡਜਸਟ ਕਰੋ">Adjust NPK values to see fertilizer recommendations</p>
+                `;
+                productsDiv.appendChild(noRecommendationMsg);
+            }
+        }
+
+        function getRecommendations(nitrogen, phosphorus, potassium) {
+            const recommendations = [];
+
+            // Recommendation logic based on NPK values
+            if (nitrogen >= 70) {
+                recommendations.push(fertilizers.topGrade);
+            }
+            if (phosphorus >= 70) {
+                recommendations.push(fertilizers.pGrade);
+            }
+            if (potassium >= 70) {
+                recommendations.push(fertilizers.kGrade);
+            }
+            if (nitrogen >= 50 && phosphorus >= 50 && potassium >= 50) {
+                recommendations.push(fertilizers.nGrade);
+            }
+            if (nitrogen < 50 || phosphorus < 50 || potassium < 50) {
+                recommendations.push(fertilizers.lowGrade);
+            }
+
+            return recommendations;
+        }
+
+        function createProductCard(fertilizer, farmSizeInHectares, language, index) {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            card.style.animationDelay = `${index * 0.1}s`;
+
+            const dosagePerHectare = calculateDosage(fertilizer);
+            const totalDosage = dosagePerHectare * farmSizeInHectares;
+            const totalCost = totalDosage * fertilizer.costPerKg;
+
+            card.innerHTML = `
+                <h3 class="product-title">${fertilizer.name[language]}</h3>
+                <p class="product-description">${fertilizer.description[language]}</p>
+                
+                <div class="product-specs">
+                    <div class="spec-item">
+                        <span class="spec-label" data-en="Composition:" data-hi="संरचना:" data-pa="ਸੰਰਚਨਾ:">Composition:</span>
+                        <span class="spec-value">${fertilizer.composition[language]}</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label" data-en="Cost per kg:" data-hi="प्रति किग्रा लागत:" data-pa="ਪ੍ਰਤੀ ਕਿਲੋ ਲਾਗਤ:">Cost per kg:</span>
+                        <span class="spec-value">₹${fertilizer.costPerKg}</span>
+                    </div>
+                </div>
+
+                <div class="product-price">₹${totalCost.toFixed(0)}</div>
+
+                <div class="dosage-info">
+                    <div class="dosage-title" data-en="Recommended Dosage:" data-hi="अनुशंसित खुराक:" data-pa="ਸਿਫਾਰਸ਼ੀ ਖੁਰਾਕ:">Recommended Dosage:</div>
+                    <div class="dosage-value">${totalDosage.toFixed(1)} kg</div>
+                </div>
+            `;
+
+            return card;
+        }
+
+        function calculateDosage(fertilizer) {
+            // Basic dosage calculation - can be refined based on specific requirements
+            switch(fertilizer) {
+                case fertilizers.topGrade:
+                    return 50; // kg per hectare
+                case fertilizers.lowGrade:
+                    return 30;
+                case fertilizers.pGrade:
+                    return 40;
+                case fertilizers.kGrade:
+                    return 45;
+                case fertilizers.nGrade:
+                    return 40;
+                default:
+                    return 35;
+            }
+        }
+
+        function convertToHectares(size, unit) {
+            const conversions = {
+                'hectares': 1,
+                'acres': 0.404686,
+                'bigha': 0.1338,
+                'marla': 0.0025,
+                'kanal': 0.05
+            };
+            return size * (conversions[unit] || 1);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Selector</title>
+    <style>
+        .slider-container {
+            margin: 20px;
+            display: inline-block;
+            margin: 20px;
+            vertical-align: top;
+        }
+        .product {
+            margin: 10px 0;
+        }
+
+
+        @media (max-width: 768px) {
+            .slider-container {
+                display: block;
+                margin: 10px 0;
+            }
+        }
+        .product-grid {
+            border: 1px solid #080000;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: space-between;
+        }
+        .product.card {
+            border: 1px solid #080000;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 200px; /* Fixed width */
+            /* flex: 1 1 auto; Allow items to grow and shrink */
+        }
+        .product.card img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+        .product.card .container {
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slider-container">
+        <label for="slider1">Slider 1: </label>
+        <input type="range" id="slider1" min="0" max="100" value="50">
+        <span id="value1">50</span>
+    </div>
+    <div class="slider-container">
+        <label for="slider2">Slider 2: </label>
+        <input type="range" id="slider2" min="0" max="100" value="50">
+        <span id="value2">50</span>
+    </div>
+    <div class="slider-container">
+        <label for="slider3">Slider 3: </label>
+        <input type="range" id="slider3" min="0" max="100" value="50">
+        <span id="value3">50</span>
+    </div>
+
+    <div id="products" class="product-grid">
+        <div class="product card" data-slider1="30" data-slider2="70" data-slider3="50">
+            <img src="product1.jpg" alt="Product 1 Image" style="width:100%">
+            <div class="container">
+                <h4><b>Product 1</b></h4>
+                <p>Description of Product 1</p>
+                <p>Quantity: 10</p>
+                <p>Price: $100</p>
+            </div>
+        </div>
+        <div class="product card" data-slider1="60" data-slider2="40" data-slider3="80">
+            <img src="product2.jpg" alt="Product 2 Image" style="width:100%">
+            <div class="container">
+                <h4><b>Product 2</b></h4>
+                <p>Description of Product 2</p>
+                <p>Quantity: 5</p>
+                <p>Price: $150</p>
+            </div>
+        </div>
+        <div class="product card" data-slider1="90" data-slider2="20" data-slider3="30">
+            <img src="product3.jpg" alt="Product 3 Image" style="width:100%">
+            <div class="container">
+                <h4><b>Product 3</b></h4>
+                <p>Description of Product 3</p>
+                <p>Quantity: 8</p>
+                <p>Price: $200</p>
+            </div>
+        </div>
+    </div>
+
+   
+
+
+    <script>
+        const sliders = document.querySelectorAll('input[type="range"]');
+        const products = document.querySelectorAll('.product');
+
+        sliders.forEach(slider => {
+            slider.addEventListener('input', updateProducts);
+        });
+
+        function updateProducts() {
+            const slider1Value = document.getElementById('slider1').value;
+            const slider2Value = document.getElementById('slider2').value;
+            const slider3Value = document.getElementById('slider3').value;
+
+            document.getElementById('value1').textContent = slider1Value;
+            document.getElementById('value2').textContent = slider2Value;
+            document.getElementById('value3').textContent = slider3Value;
+
+            products.forEach(product => {
+                const productSlider1 = product.getAttribute('data-slider1');
+                const productSlider2 = product.getAttribute('data-slider2');
+                const productSlider3 = product.getAttribute('data-slider3');
+
+                if (slider1Value >= productSlider1 && slider2Value >= productSlider2 && slider3Value >= productSlider3) {
+                    product.style.display = 'block';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+        }
+
+        updateProducts();
+    </script>
+</body>
+</html>
